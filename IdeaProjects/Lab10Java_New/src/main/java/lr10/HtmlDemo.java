@@ -5,28 +5,37 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.IOException;
+import java.io.FileWriter;
 
 public class HtmlDemo {
 
     public static void main(String[] args) {
 
         try {
-            // подключаемся к странице
+
             Document doc = Jsoup.connect("https://example.com").get();
 
             System.out.println("TITLE: " + doc.title());
 
-            // получаем ссылки
             Elements links = doc.select("a");
 
-            for (Element link : links) {
-                System.out.println("Link text: " + link.text());
-                System.out.println("URL: " + link.attr("href"));
-                System.out.println("-------------------");
+            try (FileWriter writer = new FileWriter("links.txt")) {
+
+                for (Element link : links) {
+                    System.out.println("Link: " + link.text());
+                    System.out.println("URL: " + link.attr("href"));
+                    System.out.println("-----");
+
+                    // ДОРАБОТКА: запись в файл
+                    writer.write(link.text() + " | " + link.attr("href") + "\n");
+                }
+
             }
 
-        } catch (IOException e) {
+            System.out.println("HTML parsed + saved");
+
+        } catch (Exception e) {
+            System.out.println("Error loading page");
             e.printStackTrace();
         }
     }
