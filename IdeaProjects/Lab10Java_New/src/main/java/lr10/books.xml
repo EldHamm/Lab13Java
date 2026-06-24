@@ -1,0 +1,13 @@
+<library>
+
+    <book>
+        <title>Java Basics</title>
+        <author>Ivan</author>
+    </book>
+
+    <book>
+        <title>Algorithms</title>
+        <author>Petrov</author>
+    </book>
+
+</library>
